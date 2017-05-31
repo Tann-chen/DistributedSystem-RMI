@@ -1,4 +1,4 @@
-package managementSystem;
+package implementation;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
@@ -11,7 +11,6 @@ public class CreateTRecordImp extends UnicastRemoteObject implements CreateTReco
 		super();
 	}
 
-	@Override
 	public boolean createTRecord(String firstName, String lastName, String address, String phone, String specialization,
 			String location) throws RemoteException {
 		TeacherRecord teacherRecord = new TeacherRecord(firstName, lastName, address, phone, specialization, location);
