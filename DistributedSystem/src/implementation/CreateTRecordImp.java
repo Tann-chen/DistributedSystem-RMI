@@ -2,10 +2,11 @@ package implementation;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-import interfaces.CreateTRecord;
-import records.TeacherRecord;
 
-public class CreateTRecordImp extends UnicastRemoteObject implements CreateTRecord{
+import records.TeacherRecord;
+import servers.CenterServer;
+
+public class CreateTRecordImp extends UnicastRemoteObject implements CenterServer{
 
 	protected CreateTRecordImp() throws RemoteException {
 		super();

@@ -1,10 +1,5 @@
 package client;
 
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-
-import interfaces.CreateTRecord;
-
 public class Manager {
 	String managerID;
 	

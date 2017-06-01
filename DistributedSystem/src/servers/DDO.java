@@ -8,6 +8,7 @@ import records.Record;
 
 public class DDO {
 	public static void main(String[] args) {
+
 		HashMap<Character, ArrayList<Record>> hashMap = new HashMap<>();
 		File file = new File("DDO.txt");
 	}
