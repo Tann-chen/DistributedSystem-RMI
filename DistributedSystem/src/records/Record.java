@@ -1,5 +1,7 @@
 package records;
 
-public abstract class Record {
+import java.io.Serializable;
+
+public abstract class Record implements Serializable {
 	String recordID;
 }
