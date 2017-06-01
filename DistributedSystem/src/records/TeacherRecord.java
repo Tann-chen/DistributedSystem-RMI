@@ -1,16 +1,15 @@
 package records;
 
 public class TeacherRecord extends Record{
-	private String firstName;
-	private String lastName;
-	private String address;
-	private String phone;
-	private String specialization;
-	private String location;
+	public String firstName;
+	public String lastName;
+	public String address;
+	public String phone;
+	public String specialization;
+	public String location;
 	
 	public TeacherRecord(String firstName, String lastName, String address, String phone, String specialization,
 			String location) {
-		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
