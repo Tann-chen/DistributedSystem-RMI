@@ -1,15 +1,17 @@
 package servers;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
-import records.Record;
 
 
 public class Laval {
-	public static void main(String[] args) {
-		HashMap<Character, ArrayList<Record>> hashMap = new HashMap<>();
-		File file = new File("Laval.txt");
+	public static void main(String[] args) throws Exception {
+		CenterServerImp center = new CenterServerImp();
+		Registry registry = LocateRegistry.createRegistry(3000);
+		registry.bind("LavalCenter", center);
+		
+//		File file = new File("Laval.txt");
 	}
 }
