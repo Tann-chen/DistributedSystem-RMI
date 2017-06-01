@@ -1,6 +1,8 @@
 package records;
 
-public class TeacherRecord extends Record{
+import java.io.Serializable;
+
+public class TeacherRecord extends Record implements Serializable{
 	public String firstName;
 	public String lastName;
 	public String address;
