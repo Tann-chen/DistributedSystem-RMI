@@ -5,9 +5,6 @@ public class Manager {
 	
 	
 	
-//	Registry registry = LocateRegistry.getRegistry(3000);
-//	CreateTRecord c = (CreateTRecord) registry.lookup("CreateTRecord");
-	
-//	boolean b = c.createTRecord();
+
 
 }
