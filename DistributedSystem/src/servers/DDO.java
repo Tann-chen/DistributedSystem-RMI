@@ -1,15 +1,19 @@
 package servers;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 
-import records.Record;
 
 public class DDO {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
+		CenterServerImp center = new CenterServerImp();
+		Registry registry = LocateRegistry.createRegistry(3000);
+		registry.bind("DDOCenter", center);
+		
+		System.out.println("DDO");
+		
 
-		HashMap<Character, ArrayList<Record>> hashMap = new HashMap<>();
-		File file = new File("DDO.txt");
+//		File file = new File("DDO.txt");
 	}
 }
