@@ -7,8 +7,10 @@ import java.rmi.registry.Registry;
 
 public class Montreal {
 	public static void main(String[] args) throws Exception {
+
 		File logFile=new File("/log/mrl.txt");
 		CenterServerImp center = new CenterServerImp(logFile);
+
 		Registry registry = LocateRegistry.createRegistry(3000);
 		registry.bind("MTLCenter", center);
 

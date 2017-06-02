@@ -15,8 +15,8 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
 
     private HashMap<Character,ArrayList<Record>> storedRecords = new HashMap<>();
     private File loggingFile;
-
-
+   
+    
     public CenterServerImp(File loggingFile)throws Exception{
         this.loggingFile=loggingFile;
     }
@@ -27,6 +27,7 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
     	int beforeNum=getRecordCounts();
         storingRecord(teacherRecord);
         int afterNum=getLocalRecordsCount();
+
         String log=(new Date().toString()+" - creating a teacher record - "+teacherRecord.recordID);
         writelog(log);
         return beforeNum+1==afterNum;
@@ -41,6 +42,7 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
         String log=(new Date().toString()+" - creating a student record - "+studentRecord.recordID);
         writelog(log);
         return beforeNum+1==afterNum;
+
     }
 
     @Override
