@@ -10,7 +10,9 @@ public class Montreal {
 	public static void main(String[] args) throws Exception {
 
 		File logFile=new File("mrl.txt");
+
 		centerServer = new CenterServerImp(logFile);
+
 
 		Registry registry = LocateRegistry.createRegistry(3000);
 		registry.bind("MTLCenter",centerServer);
