@@ -3,8 +3,12 @@ package servers;
 import records.Record;
 import records.StudentRecord;
 import records.TeacherRecord;
+
+import java.io.*;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -12,21 +16,32 @@ import java.util.HashMap;
 public class CenterServerImp extends UnicastRemoteObject implements CenterServer {
 
     private HashMap<Character,ArrayList<Record>> storedRecords = new HashMap<>();
+    private File loggingFile;
 
-    public CenterServerImp()throws Exception{}
+
+    public CenterServerImp(File loggingFile)throws Exception{
+        this.loggingFile=loggingFile;
+    }
 
     @Override
     public boolean createTRecord(String firstName, String lastName, String address, String phone, String specialization, String location) throws RemoteException {
     	TeacherRecord teacherRecord = new TeacherRecord(firstName, lastName, address, phone, specialization, location);
+    	int beforeNum=getRecordCounts();
         storingRecord(teacherRecord);
-        return true;
+        int afterNum=getLocalRecordsCount();
+        return beforeNum==afterNum;
+        //get datetime-add in the front of string blow;
+
+
     }
 
     @Override
     public boolean createSRecord(String firstName, String lastName, String coursesRegistered, String status, String date) throws RemoteException {
     	StudentRecord studentRecord = new StudentRecord(firstName, lastName, coursesRegistered, status, date);
+        int beforeNum=getRecordCounts();
         storingRecord(studentRecord);
-        return true;
+        int afterNum=getLocalRecordsCount();
+        return beforeNum==afterNum;
     }
 
     @Override
@@ -78,4 +93,20 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
         }
         return count;
     }
-}
+
+    public void writelog(String log){
+        if(!loggingFile.exists())
+            return;
+            try {
+                FileWriter fileWriter = new FileWriter(loggingFile, true);
+                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+                bufferedWriter.newLine();
+                bufferedWriter.write(log);
+                bufferedWriter.close();
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+
