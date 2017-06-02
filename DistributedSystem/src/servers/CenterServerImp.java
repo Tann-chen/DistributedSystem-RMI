@@ -3,12 +3,9 @@ package servers;
 import records.Record;
 import records.StudentRecord;
 import records.TeacherRecord;
-
 import java.io.*;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -17,8 +14,8 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
 
     private HashMap<Character,ArrayList<Record>> storedRecords = new HashMap<>();
     private File loggingFile;
-
-
+   
+    
     public CenterServerImp(File loggingFile)throws Exception{
         this.loggingFile=loggingFile;
     }
@@ -31,8 +28,7 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
         int afterNum=getLocalRecordsCount();
         return beforeNum==afterNum;
         //get datetime-add in the front of string blow;
-
-
+       
     }
 
     @Override
@@ -42,6 +38,8 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
         storingRecord(studentRecord);
         int afterNum=getLocalRecordsCount();
         return beforeNum==afterNum;
+        
+        
     }
 
     @Override
