@@ -19,7 +19,28 @@ public class TeacherRecord extends Record implements Serializable{
 		this.location = location;
 	}
 
-	public void editValue(String fieldName, String Value){
+	public boolean setValue(String fieldName, String value){
 
+		if(fieldName.equalsIgnoreCase("location")){
+			if(value.equals("mtl")||value.equals("lvl")||value.equals("ddo")){
+				this.location=value;
+				return true;
+			}
+			else
+				return false;
+		}
+		else if(fieldName.equalsIgnoreCase("address")){
+			this.address=value;
+			return true;
+		}
+		else if(fieldName.equalsIgnoreCase("phone")){
+			this.phone=value;
+			return true;
+		}
+		else if(fieldName.equalsIgnoreCase("specialization")){
+			this.specialization=value;
+			return true;
+		}
+		else return false;
 	}
 }
