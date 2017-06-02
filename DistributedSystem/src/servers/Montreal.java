@@ -11,6 +11,7 @@ public class Montreal {
 		CenterServerImp center = new CenterServerImp();
 		Registry registry = LocateRegistry.createRegistry(3000);
 		registry.bind("MTLCenter", center);
+		System.out.println("MTL");
 		
 //		File file = new File("Montreal.txt");
 		
