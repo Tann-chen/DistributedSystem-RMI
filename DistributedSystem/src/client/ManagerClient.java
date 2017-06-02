@@ -13,118 +13,26 @@ import java.util.Date;
 import servers.CenterServer;
 
 public class ManagerClient {
+
 	public static void main(String[] args) throws Exception {
-		Registry registry = null;
-		CenterServer centerServer = null;
-		boolean flag = false;
-		int num = 0;
-		String message;
-		
-		File file = new File("Manager.txt");
+		Manager manager1=new Manager("MTL1111","chen");
+		manager1.createSRecord("chen","en","math","active","2008-10-01");
 
-		
-		
-		Date now = new Date();
-	    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-	    String time = simpleDateFormat.format(now);
-		
-		Manager manager1 = new Manager("MTL1111","manager1");
-		num = callMethod(manager1);
-		if(num == 1){
-			registry = LocateRegistry.getRegistry(3000);
-			centerServer= (CenterServer) registry.lookup("MTLCenter");
-		}
-		else if(num == 2){
-			registry = LocateRegistry.getRegistry(3001);
-			centerServer= (CenterServer) registry.lookup("LVLCenter");
-		}
-		else if(num == 3){
-			registry = LocateRegistry.getRegistry(3002);
-			centerServer= (CenterServer) registry.lookup("DDOCenter");
-		}
-		flag = centerServer.createSRecord("Grey", "Lee", "Math", "active", "2017/06/01");
-		message = manager1.name + ": Create Student Record: "+ flag + ", at "+ time;
-		writelog(message,file);
-		System.out.println("Create Student Record: "+ flag);
-		
-		
-		now = new Date();
-		time = simpleDateFormat.format(now);
-		Manager manager2 = new Manager("LVL2222","manager2");
-		num = callMethod(manager2);
-		if(num == 1){
-			registry = LocateRegistry.getRegistry(3000);
-			centerServer= (CenterServer) registry.lookup("MTLCenter");
-		}
-		else if(num == 2){
-			registry = LocateRegistry.getRegistry(3001);
-			centerServer= (CenterServer) registry.lookup("LVLCenter");
-		}
-		else if(num == 3){
-			registry = LocateRegistry.getRegistry(3002);
-			centerServer= (CenterServer) registry.lookup("DDOCenter");
-		}
-		flag = centerServer.createTRecord("Mark", "Chen", "Du Fort", "123456789", "English", "MTL");
-		
-		message = manager2.name + ": Create Teacher Record: "+ flag + ", at "+ time;
-		writelog(message,file);
-		System.out.println("Create Teacher Record: " + flag);
-		
-		
-		now = new Date();
-		time = simpleDateFormat.format(now);
-		Manager manager3 = new Manager("DDO3333","manager3");
-		num = callMethod(manager3);
-		if(num == 1){
-			registry = LocateRegistry.getRegistry(3000);
-			centerServer= (CenterServer) registry.lookup("MTLCenter");
-		}
-		else if(num == 2){
-			registry = LocateRegistry.getRegistry(3001);
-			centerServer= (CenterServer) registry.lookup("LVLCenter");
-		}
-		else if(num == 3){
-			registry = LocateRegistry.getRegistry(3002);
-			centerServer= (CenterServer) registry.lookup("DDOCenter");
-		}
-		centerServer.editRecord("10000", "lastName", "Gao");
-		
-		message = manager3.name + ": Edit Record, at "+ time;
-		writelog(message,file);
-		System.out.println("Edit Record ");
-		
-		
-		
-		
-		
+
+		Manager manager2=new Manager("DDO1111","chen");
+		manager2.createSRecord("chen","en","math","active","2008-10-01");
+		manager2.getRecordCounts();
+
+		Manager manager3=new Manager("LVL1111","chen");
+		manager3.createSRecord("chen","en","math","active","2008-10-01");
+		manager3.getRecordCounts();
+
+		Manager manager4=new Manager("MTL2222","li");
+		manager4.createTRecord("li","wei","lvl","1122","xxx","lvl");
+		manager4.getRecordCounts();
+
+		Manager manager5=new Manager("DDO2222","li");
+		manager5.createTRecord("li","wei","lvl","1122","xxx","lvl");
+		manager5.getRecordCounts();
 	}
-	
-	 private static void writelog(String log, File file){
-
-	            try {
-	                FileWriter fileWriter = new FileWriter(file, true);
-	                BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-	                bufferedWriter.newLine();
-	                bufferedWriter.write(log);
-	                bufferedWriter.close();
-	            }catch (IOException e){
-	                e.printStackTrace();
-	            }
-	        }
-
-	private static int callMethod(Manager manager) {
-		
-		if(manager.managerID.startsWith("MTL")){
-			return 1;
-		}
-		else if(manager.managerID.startsWith("LVL")){
-			
-			return 2;
-		}
-		else
-			return 3;
-		
-		
-	}
-
 }

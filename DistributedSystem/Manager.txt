@@ -1,0 +1,10 @@
+
+Fri Jun 02 16:29:30 EDT 2017 | chen- create student record - true
+Fri Jun 02 16:29:30 EDT 2017 | chen- create student record - true
+Fri Jun 02 16:29:30 EDT 2017 | chen- get records count - 1
+Fri Jun 02 16:29:30 EDT 2017 | chen- create student record - true
+Fri Jun 02 16:29:30 EDT 2017 | chen- get records count - 1
+Fri Jun 02 16:29:30 EDT 2017 | li- create teacher record - true
+Fri Jun 02 16:29:30 EDT 2017 | li- get records count - 2
+Fri Jun 02 16:29:30 EDT 2017 | li- create teacher record - true
+Fri Jun 02 16:29:30 EDT 2017 | li- get records count - 2

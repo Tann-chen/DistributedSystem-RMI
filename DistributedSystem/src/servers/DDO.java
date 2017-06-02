@@ -6,13 +6,14 @@ import java.rmi.registry.Registry;
 
 
 public class DDO {
-	public static void main(String[] args) throws Exception {
+	private static CenterServer centerServer;
 
+	public static void main(String[] args) throws Exception {
 		File logFile = new File("ddo.txt");
-		CenterServerImp center = new CenterServerImp(logFile);
+		centerServer= new CenterServerImp(logFile);
 
 		Registry registry = LocateRegistry.createRegistry(3002);
-		registry.bind("DDOCenter", center);
+		registry.bind("DDOCenter", centerServer);
 		
 		System.out.println("DDO");
 	}
