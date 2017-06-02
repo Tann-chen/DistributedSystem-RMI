@@ -5,16 +5,16 @@ import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 
 
-
 public class Montreal {
 	public static void main(String[] args) throws Exception {
-		CenterServerImp center = new CenterServerImp(new File("MTL.txt"));
+
+		File logFile=new File("/log/mrl.txt");
+		CenterServerImp center = new CenterServerImp(logFile);
+
 		Registry registry = LocateRegistry.createRegistry(3000);
 		registry.bind("MTLCenter", center);
+
 		System.out.println("MTL");
-		
-//		File file = new File("Montreal.txt");
-		
 	}
 
 }

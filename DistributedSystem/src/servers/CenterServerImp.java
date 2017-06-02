@@ -8,6 +8,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 
 public class CenterServerImp extends UnicastRemoteObject implements CenterServer {
@@ -26,9 +27,10 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
     	int beforeNum=getRecordCounts();
         storingRecord(teacherRecord);
         int afterNum=getLocalRecordsCount();
-        return beforeNum==afterNum;
-        //get datetime-add in the front of string blow;
-       
+
+        String log=(new Date().toString()+" - creating a teacher record - "+teacherRecord.recordID);
+        writelog(log);
+        return beforeNum+1==afterNum;
     }
 
     @Override
@@ -37,13 +39,16 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
         int beforeNum=getRecordCounts();
         storingRecord(studentRecord);
         int afterNum=getLocalRecordsCount();
-        return beforeNum==afterNum;
-        
-        
+        String log=(new Date().toString()+" - creating a student record - "+studentRecord.recordID);
+        writelog(log);
+        return beforeNum+1==afterNum;
+
     }
 
     @Override
     public int getRecordCounts() throws RemoteException {
+        String log=(new Date().toString()+" - get records number ");
+        writelog(log);
         return 0;
     }
 
@@ -65,6 +70,8 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
             else
                 ((StudentRecord)targetRecord).setValue(fieldName,newValue);
         }
+        String log=(new Date().toString()+" - editing a record - "+targetRecord.recordID);
+        writelog(log);
     }
 
     private void storingRecord(Record record){
