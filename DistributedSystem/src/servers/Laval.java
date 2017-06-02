@@ -8,7 +8,7 @@ import java.rmi.registry.Registry;
 
 public class Laval {
 	public static void main(String[] args) throws Exception {
-		CenterServerImp center = new CenterServerImp();
+		CenterServerImp center = new CenterServerImp(new File("LVL.txt"));
 		Registry registry = LocateRegistry.createRegistry(3001);
 		registry.bind("LVLCenter", center);
 		System.out.println("LVL");

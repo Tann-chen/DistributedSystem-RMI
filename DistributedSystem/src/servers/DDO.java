@@ -7,7 +7,7 @@ import java.rmi.registry.Registry;
 
 public class DDO {
 	public static void main(String[] args) throws Exception {
-		CenterServerImp center = new CenterServerImp();
+		CenterServerImp center = new CenterServerImp(new File("DDO.txt"));
 		Registry registry = LocateRegistry.createRegistry(3002);
 		registry.bind("DDOCenter", center);
 		
