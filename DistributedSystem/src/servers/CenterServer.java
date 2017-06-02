@@ -13,6 +13,6 @@ public interface CenterServer extends Remote{
 
      int  getRecordCounts()throws RemoteException;
 
-     void editRecord(String recordID, String firstName, String newValue)throws RemoteException;
+     void editRecord(String recordID, String fieldName, String newValue)throws RemoteException;
 
 }
