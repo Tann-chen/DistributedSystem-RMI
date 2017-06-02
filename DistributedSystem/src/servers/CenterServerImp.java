@@ -59,10 +59,15 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
         Collection<ArrayList<Record>> arrayListsSet=storedRecords.values();
         for(ArrayList<Record> recordArrayListSet :arrayListsSet){
             for(Record record:recordArrayListSet){
-                if(record.recordID.equalsIgnoreCase(recordID))
-                    targetRecord=record;
+                if(record.recordID.equalsIgnoreCase(recordID)){
+                  targetRecord=record;
+                  System.out.println(targetRecord.lastName);
+                }
+               
             }
         }
+     
+
 
         if(targetRecord!=null){
             if(targetRecord instanceof TeacherRecord)
@@ -70,8 +75,13 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
             else
                 ((StudentRecord)targetRecord).setValue(fieldName,newValue);
         }
-        String log=(new Date().toString()+" - editing a record - "+targetRecord.recordID);
+//        if(targetRecord == null)
+//        	System.out.println("null");
+
+        String log=(new Date().toString()+" - editing a record - ");
         writelog(log);
+        
+       
     }
 
     private void storingRecord(Record record){

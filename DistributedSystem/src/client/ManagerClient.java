@@ -91,7 +91,7 @@ public class ManagerClient {
 //			System.out.println("aaaa");
 //		else
 //			System.out.println("bbbb");
-		centerServer.editRecord("SR10000", "coursesRegistered", "Chinese");
+		centerServer.editRecord("SR10001", "coursesRegistered", "Chinese");
 		
 		message = manager3.name + ": Edit Record, at "+ time;
 		writelog(message,file);
