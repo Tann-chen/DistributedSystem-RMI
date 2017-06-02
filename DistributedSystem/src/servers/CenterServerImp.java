@@ -24,7 +24,7 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
     @Override
     public boolean createTRecord(String firstName, String lastName, String address, String phone, String specialization, String location) throws RemoteException {
     	TeacherRecord teacherRecord = new TeacherRecord(firstName, lastName, address, phone, specialization, location);
-    	int beforeNum=getRecordCounts();
+    	int beforeNum=getLocalRecordsCount();
         storingRecord(teacherRecord);
         int afterNum=getLocalRecordsCount();
 
@@ -36,7 +36,7 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
     @Override
     public boolean createSRecord(String firstName, String lastName, String coursesRegistered, String status, String date) throws RemoteException {
     	StudentRecord studentRecord = new StudentRecord(firstName, lastName, coursesRegistered, status, date);
-        int beforeNum=getRecordCounts();
+        int beforeNum=getLocalRecordsCount();
         storingRecord(studentRecord);
         int afterNum=getLocalRecordsCount();
         String log=(new Date().toString()+" - creating a student record - "+studentRecord.recordID);
@@ -49,7 +49,7 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
     public int getRecordCounts() throws RemoteException {
         String log=(new Date().toString()+" - get records number ");
         writelog(log);
-        return 0;
+        return getLocalRecordsCount();
     }
 
     @Override
@@ -75,13 +75,10 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
             else
                 ((StudentRecord)targetRecord).setValue(fieldName,newValue);
         }
-//        if(targetRecord == null)
-//        	System.out.println("null");
 
         String log=(new Date().toString()+" - editing a record - ");
         writelog(log);
         
-       
     }
 
     private void storingRecord(Record record){
@@ -115,8 +112,8 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
             try {
                 FileWriter fileWriter = new FileWriter(loggingFile, true);
                 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-                bufferedWriter.newLine();
                 bufferedWriter.write(log);
+                bufferedWriter.newLine();
                 bufferedWriter.close();
             }catch (IOException e){
                 e.printStackTrace();

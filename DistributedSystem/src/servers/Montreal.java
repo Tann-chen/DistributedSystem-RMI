@@ -6,13 +6,16 @@ import java.rmi.registry.Registry;
 
 
 public class Montreal {
+	private static CenterServer centerServer;
 	public static void main(String[] args) throws Exception {
 
 		File logFile=new File("mrl.txt");
-		CenterServerImp center = new CenterServerImp(logFile);
+
+		centerServer = new CenterServerImp(logFile);
+
 
 		Registry registry = LocateRegistry.createRegistry(3000);
-		registry.bind("MTLCenter", center);
+		registry.bind("MTLCenter",centerServer);
 
 		System.out.println("MTL");
 	}
