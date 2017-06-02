@@ -87,7 +87,11 @@ public class ManagerClient {
 			registry = LocateRegistry.getRegistry(3002);
 			centerServer= (CenterServer) registry.lookup("DDOCenter");
 		}
-		centerServer.editRecord("10000", "lastName", "Gao");
+//		if(centerServer == null)
+//			System.out.println("aaaa");
+//		else
+//			System.out.println("bbbb");
+		centerServer.editRecord("SR10000", "coursesRegistered", "Chinese");
 		
 		message = manager3.name + ": Edit Record, at "+ time;
 		writelog(message,file);
