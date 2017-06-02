@@ -47,13 +47,12 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
             }
         }
 
-        if(targetRecord==null)
-            return;
-        else{
-
+        if(targetRecord!=null){
+            if(targetRecord instanceof TeacherRecord)
+                ((TeacherRecord)targetRecord).setValue(fieldName,newValue);
+            else
+                ((StudentRecord)targetRecord).setValue(fieldName,newValue);
         }
-
-
     }
 
     private void storingRecord(Record record){
@@ -68,5 +67,16 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
             theArray.add(record);
         }
 
+    }
+
+    public int getLocalRecordsCount(){
+        int count=0;
+        Collection<ArrayList<Record>> arrayListsSet=storedRecords.values();
+        for(ArrayList<Record> recordArrayListSet :arrayListsSet){
+            for(Record record:recordArrayListSet){
+                count++;
+            }
+        }
+        return count;
     }
 }

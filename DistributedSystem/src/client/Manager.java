@@ -1,7 +1,9 @@
 package client;
 
 public class Manager {
+
 	String managerID;
+
 	String name;
 	
 	
@@ -9,9 +11,5 @@ public class Manager {
 		this.managerID = managerID;
 		this.name = name;
 	}
-	
-	
-	
-
 
 }
