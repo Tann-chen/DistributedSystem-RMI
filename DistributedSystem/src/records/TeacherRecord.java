@@ -12,7 +12,7 @@ public class TeacherRecord extends Record implements Serializable{
 	public TeacherRecord(String firstName, String lastName, String address, String phone, String specialization,
 			String location) {
 		super(firstName,lastName);
-		this.recordID="TR"+String.valueOf(idCounter+1);
+		this.recordID="TR"+String.valueOf(++idCounter);
 		this.address = address;
 		this.phone = phone;
 		this.specialization = specialization;
@@ -42,5 +42,12 @@ public class TeacherRecord extends Record implements Serializable{
 			return true;
 		}
 		else return false;
+	}
+
+	@Override
+	public String toString() {
+		return "TeacherRecord [address=" + address + ", phone=" + phone + ", specialization=" + specialization
+				+ ", location=" + location + ", recordID=" + recordID + ", firstName=" + firstName + ", lastName="
+				+ lastName + "]";
 	}
 }

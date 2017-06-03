@@ -74,7 +74,6 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
 
         String log=(new Date().toString()+" - get records number ");
         writelog(log);
-
         
         return "Records Count: DDO:"+DDONum+" | LVL:"+LVLNum+" | MTL:"+MTLNum;
     }
@@ -91,15 +90,19 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
             }
         }
      
-
+        System.out.println(targetRecord);
 
         if(targetRecord!=null){
-            if(targetRecord instanceof TeacherRecord)
+            if(targetRecord instanceof TeacherRecord){
                 ((TeacherRecord)targetRecord).setValue(fieldName,newValue);
-            else
+                System.out.println(targetRecord);
+            }
+            else {
                 ((StudentRecord)targetRecord).setValue(fieldName,newValue);
+                System.out.println(targetRecord);
+            }
         }
-
+        
         String log=(new Date().toString()+" - editing a record ");
         writelog(log);
         
