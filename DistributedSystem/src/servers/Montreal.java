@@ -29,7 +29,7 @@ public class Montreal {
 			while(true){
 				DatagramPacket request = new DatagramPacket(buffer, buffer.length);
 				datagramSocket.receive(request);
-				new MyThread(request.getAddress(),request.getPort(),datagramSocket);
+				new MyThread(request.getAddress(),request.getPort(),datagramSocket,centerServer);
 			}
 			
 		} catch (Exception e) {
