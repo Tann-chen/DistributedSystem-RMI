@@ -18,18 +18,19 @@ public class Montreal {
 
 		Registry registry = LocateRegistry.createRegistry(3000);
 		registry.bind("MTLCenter",centerServer);
-		System.out.println("MTL");
-		
+		System.out.println("MTL start");
+		//listening to request
 		DatagramSocket datagramSocket = null;
-		
+		//create belonging socket
 		try {
 			datagramSocket = new DatagramSocket(6791);
 			byte[] buffer = new byte[1000];
-			
+			//listening
+			System.out.println("MTL start listening");
 			while(true){
 				DatagramPacket request = new DatagramPacket(buffer, buffer.length);
 				datagramSocket.receive(request);
-				new MyThread(request.getAddress(),request.getPort(),datagramSocket,centerServer);
+				new MyThread(request.getAddress(),request.getPort(),datagramSocket,centerServer).start();
 			}
 			
 		} catch (Exception e) {

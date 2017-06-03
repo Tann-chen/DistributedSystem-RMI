@@ -17,19 +17,20 @@ public class DDO {
 
 		Registry registry = LocateRegistry.createRegistry(3002);
 		registry.bind("DDOCenter", centerServer);
-		
-		System.out.println("DDO");
-		
+		System.out.println("DDO start");
+
+		//listening to request
 		DatagramSocket datagramSocket = null;
-		
 		try {
+			//create belonging socket
 			datagramSocket = new DatagramSocket(6789);
 			byte[] buffer = new byte[1000];
-			
+			//listening
+			System.out.println("DDO start listening");
 			while(true){
 				DatagramPacket request = new DatagramPacket(buffer, buffer.length);
 				datagramSocket.receive(request);
-				new MyThread(request.getAddress(),request.getPort(),datagramSocket,centerServer);
+				new MyThread(request.getAddress(),request.getPort(),datagramSocket,centerServer).start();
 			}
 			
 		} catch (Exception e) {

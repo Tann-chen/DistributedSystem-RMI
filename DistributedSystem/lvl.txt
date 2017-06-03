@@ -1,2 +1,1 @@
-Fri Jun 02 16:29:30 EDT 2017 - creating a student record - SR10001
-Fri Jun 02 16:29:30 EDT 2017 - get records number 
+Sat Jun 03 15:07:20 EDT 2017 - creating a student record - SR10001
