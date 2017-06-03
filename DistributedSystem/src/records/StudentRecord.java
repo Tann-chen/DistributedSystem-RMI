@@ -12,7 +12,7 @@ public class StudentRecord extends Record implements Serializable{
 	
 	public StudentRecord(String firstName, String lastName, String coursesRegistered, String status, String date){
 		super(firstName,lastName);
-		this.recordID="SR"+String.valueOf(idCounter+1);
+		this.recordID="SR"+String.valueOf(++idCounter);
 		this.coursesRegistered = coursesRegistered;
 		this.status = status;
 		this.date = date;

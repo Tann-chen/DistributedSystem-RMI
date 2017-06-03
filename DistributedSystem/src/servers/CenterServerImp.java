@@ -34,7 +34,7 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
         int afterNum=getLocalRecordsCount();
 
         String log=(new Date().toString()+" - creating a teacher record - "+teacherRecord.recordID);
-        writelog(log);
+        writeLog(log);
         return beforeNum+1==afterNum;
     }
 
@@ -45,9 +45,8 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
         storingRecord(studentRecord);
         int afterNum=getLocalRecordsCount();
         String log=(new Date().toString()+" - creating a student record - "+studentRecord.recordID);
-        writelog(log);
+        writeLog(log);
         return beforeNum+1==afterNum;
-
     }
 
     @Override
@@ -73,7 +72,7 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
         }
 
         String log=(new Date().toString()+" - get records number ");
-        writelog(log);
+        writeLog(log);
 
         
         return "Records Count: DDO:"+DDONum+" | LVL:"+LVLNum+" | MTL:"+MTLNum;
@@ -101,7 +100,7 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
         }
 
         String log=(new Date().toString()+" - editing a record ");
-        writelog(log);
+        writeLog(log);
         
     }
 
@@ -130,7 +129,7 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
         return count;
     }
 
-    public void writelog(String log){
+    public void writeLog(String log){
         if(!loggingFile.exists())
             return;
             try {
@@ -171,6 +170,6 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
 		return "-1";
     }
 	
-    }
+}
 
 
