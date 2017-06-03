@@ -4,6 +4,9 @@ import records.Record;
 import records.StudentRecord;
 import records.TeacherRecord;
 import java.io.*;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
@@ -15,10 +18,12 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
 
     private HashMap<Character,ArrayList<Record>> storedRecords = new HashMap<>();
     private File loggingFile;
+    private String centerName;
    
     
-    public CenterServerImp(File loggingFile)throws Exception{
+    public CenterServerImp(File loggingFile,String centerName)throws Exception{
         this.loggingFile=loggingFile;
+        this.centerName = centerName;
     }
 
     @Override
@@ -49,6 +54,28 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
     public int getRecordCounts() throws RemoteException {
         String log=(new Date().toString()+" - get records number ");
         writelog(log);
+        String DDO = null;
+        String LVL = null;
+        String MTL = null;
+        if(centerName == "MTL"){
+        	DDO = sentMessage(6789);
+        	LVL = sentMessage(6790);
+        }
+        else if(centerName == "LVL"){
+        	DDO = sentMessage(6789);
+        	MTL = sentMessage(6791);
+        }
+        else{
+        	MTL = sentMessage(6791);
+        	LVL = sentMessage(6790);
+        }
+        
+        
+        
+        int localRecordCount = getLocalRecordsCount();
+        
+        
+        
         return getLocalRecordsCount();
     }
 
@@ -59,11 +86,8 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
         Collection<ArrayList<Record>> arrayListsSet=storedRecords.values();
         for(ArrayList<Record> recordArrayListSet :arrayListsSet){
             for(Record record:recordArrayListSet){
-                if(record.recordID.equalsIgnoreCase(recordID)){
+                if(record.recordID.equalsIgnoreCase(recordID))
                   targetRecord=record;
-                  System.out.println(targetRecord.lastName);
-                }
-               
             }
         }
      
@@ -119,6 +143,45 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
                 e.printStackTrace();
             }
         }
+
+    
+    public String sentMessage(int port){
+    	DatagramSocket datagramSocket = null;
+        
+        try {
+        	datagramSocket = new DatagramSocket(port);
+        	byte[] message = "Get Record Counts".getBytes();
+        	InetAddress host = InetAddress.getByName("localhost");
+        	
+        	DatagramPacket request = new DatagramPacket(message, "Get Record Counts".length(),host, port);
+        	datagramSocket.send(request);
+        	
+        	
+        	byte[] buffer = new byte[1000];
+        	DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
+        	datagramSocket.receive(reply);
+        	System.out.println(new String(reply.getData()));
+        	return new String(reply.getData());
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}finally {
+			if(datagramSocket != null)
+				datagramSocket.close();
+		}
+		return null;
+        
+    }
+//	@Override
+//	public synchronized void run() {
+//		int num = getLocalRecordsCount();
+//		byte[] buffer = new byte[1000];
+//		
+//		
+//		
+//	}
+	
+	
     }
 
 
