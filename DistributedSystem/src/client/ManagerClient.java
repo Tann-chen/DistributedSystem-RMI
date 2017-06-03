@@ -7,11 +7,9 @@ public class ManagerClient {
 		Manager manager1=new Manager("MTL1111","manager1");
 		manager1.createSRecord("chen1","A","Math","active","2008-10-02");
 		manager1.getRecordCounts();
-		
 
 		Manager manager2=new Manager("DDO1111","manager2");
 		manager2.createSRecord("chen2","B","English","active","2008-10-03");
-		manager2.getRecordCounts();
 
 		Manager manager3=new Manager("LVL1111","manager3");
 		manager3.createSRecord("chen3","C","French","active","2008-10-04");
@@ -27,5 +25,8 @@ public class ManagerClient {
 		
 		Manager manager6=new Manager("LVL1111","manager6");
 		manager6.editRecord("SR10001", "coursesRegistered", "Spanish");
+		
+		manager1.createTRecord("li7","G","Guy","1357924680","Chinese","MTL");
+		manager1.getRecordCounts();
 	}
 }
