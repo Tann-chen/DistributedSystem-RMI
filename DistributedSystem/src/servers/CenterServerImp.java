@@ -51,36 +51,36 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
     }
 
     @Override
-    public int getRecordCounts() throws RemoteException {
-        String log=(new Date().toString()+" - get records number ");
-        writelog(log);
-        String DDO = null;
-        String LVL = null;
-        String MTL = null;
+    public String getRecordCounts() throws RemoteException {
+
+        String DDONum ;
+        String LVLNum ;
+        String MTLNum ;
         if(centerName == "MTL"){
-        	DDO = sentMessage(6789);
-        	LVL = sentMessage(6790);
+        	DDONum = sentMessage(6789);
+        	LVLNum = sentMessage(6790);
+        	MTLNum=String.valueOf(getLocalRecordsCount());
         }
         else if(centerName == "LVL"){
-        	DDO = sentMessage(6789);
-        	MTL = sentMessage(6791);
+        	DDONum = sentMessage(6789);
+        	MTLNum = sentMessage(6791);
+        	LVLNum = String.valueOf(getLocalRecordsCount());
         }
         else{
-        	MTL = sentMessage(6791);
-        	LVL = sentMessage(6790);
+        	MTLNum = sentMessage(6791);
+        	LVLNum = sentMessage(6790);
+        	DDONum=String.valueOf(getLocalRecordsCount());
         }
+
+        String log=(new Date().toString()+" - get records number ");
+        writelog(log);
+
         
-        
-        
-        int localRecordCount = getLocalRecordsCount();
-        
-        
-        
-        return getLocalRecordsCount();
+        return "Records Count: DDO:"+DDONum+" | LVL:"+LVLNum+" | MTL:"+MTLNum;
     }
 
     @Override
-    public void editRecord(String recordID, String fieldName, String newValue) throws RemoteException {
+    public synchronized void editRecord(String recordID, String fieldName, String newValue) throws RemoteException {
         Record targetRecord=null;
 
         Collection<ArrayList<Record>> arrayListsSet=storedRecords.values();
@@ -100,12 +100,12 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
                 ((StudentRecord)targetRecord).setValue(fieldName,newValue);
         }
 
-        String log=(new Date().toString()+" - editing a record - ");
+        String log=(new Date().toString()+" - editing a record ");
         writelog(log);
         
     }
 
-    private void storingRecord(Record record){
+    private synchronized void storingRecord(Record record){
         char cap=record.lastName.charAt(0);
         if(!storedRecords.containsKey(cap)){
             ArrayList<Record> newArray=new ArrayList<Record>();
@@ -119,7 +119,7 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
 
     }
 
-    public int getLocalRecordsCount(){
+    public synchronized int getLocalRecordsCount(){
         int count=0;
         Collection<ArrayList<Record>> arrayListsSet=storedRecords.values();
         for(ArrayList<Record> recordArrayListSet :arrayListsSet){
@@ -147,16 +147,15 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
     
     public String sentMessage(int port){
     	DatagramSocket datagramSocket = null;
-        
         try {
-        	datagramSocket = new DatagramSocket(port);
+        	datagramSocket = new DatagramSocket();
         	byte[] message = "Get Record Counts".getBytes();
         	InetAddress host = InetAddress.getByName("localhost");
         	
         	DatagramPacket request = new DatagramPacket(message, "Get Record Counts".length(),host, port);
         	datagramSocket.send(request);
         	
-        	
+        	//get message
         	byte[] buffer = new byte[1000];
         	DatagramPacket reply = new DatagramPacket(buffer, buffer.length);
         	datagramSocket.receive(reply);
@@ -169,18 +168,8 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
 			if(datagramSocket != null)
 				datagramSocket.close();
 		}
-		return null;
-        
+		return "-1";
     }
-//	@Override
-//	public synchronized void run() {
-//		int num = getLocalRecordsCount();
-//		byte[] buffer = new byte[1000];
-//		
-//		
-//		
-//	}
-	
 	
     }
 

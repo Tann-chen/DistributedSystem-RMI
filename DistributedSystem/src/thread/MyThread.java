@@ -13,7 +13,7 @@ public class MyThread extends Thread{
 	DatagramSocket datagramSocket;
 	CenterServerImp centerServerImp;
 
-	public MyThread(InetAddress address, int port, DatagramSocket datagramSocket, CenterServer centerServer) {
+	public MyThread(InetAddress address, int port, DatagramSocket datagramSocket, CenterServer centerServer){
 		this.address = address;
 		this.port = port;
 		this.datagramSocket = datagramSocket;
@@ -25,17 +25,19 @@ public class MyThread extends Thread{
 	public void run() {
 		int num = centerServerImp.getLocalRecordsCount();
 		byte[] message = String.valueOf(num).getBytes();
-		
-		
+
 		try {
 			DatagramPacket reply = new DatagramPacket(message, message.length, address, port);
 			datagramSocket.send(reply);
-		} catch (IOException e) {
+			System.out.println("reply the count");
+			this.join();
+		} catch (Exception e) {
 			e.printStackTrace();
 		}finally {
 			if(datagramSocket != null)
 				datagramSocket.close();
 		}
+
 	}
 
 }

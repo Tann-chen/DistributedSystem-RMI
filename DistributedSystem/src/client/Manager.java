@@ -1,7 +1,6 @@
 package client;
 
-import records.StudentRecord;
-import records.TeacherRecord;
+
 import servers.CenterServer;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -71,8 +70,8 @@ public class Manager {
 		writelog(log);
 	}
 
-	public int  getRecordCounts() throws RemoteException {
-		int result=0;
+	public void getRecordCounts() throws RemoteException {
+			String result=null;
 		try{
 			result=centerServer.getRecordCounts();
 		}catch (RemoteException re){
@@ -80,7 +79,7 @@ public class Manager {
 		}
 		String log=(new Date().toString())+" | "+this.name + "- get records count - "+ result;
 		writelog(log);
-		return result;
+		System.out.println(result);
 	}
 
 	public void editRecord(String recordID, String fieldName, String newValue) throws RemoteException {
