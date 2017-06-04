@@ -43,4 +43,11 @@ public class TeacherRecord extends Record implements Serializable{
 		}
 		else return false;
 	}
+
+	@Override
+	public String toString() {
+		return "TeacherRecord [address=" + address + ", phone=" + phone + ", specialization=" + specialization
+				+ ", location=" + location + ", recordID=" + recordID + ", firstName=" + firstName + ", lastName="
+				+ lastName + "]";
+	}
 }
