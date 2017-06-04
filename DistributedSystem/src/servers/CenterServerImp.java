@@ -80,7 +80,7 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
     }
 
     @Override
-    public synchronized void editRecord(String recordID, String fieldName, String newValue) throws RemoteException {
+    public void editRecord(String recordID, String fieldName, String newValue) throws RemoteException {
         Record targetRecord=null;
 
         Collection<ArrayList<Record>> arrayListsSet=storedRecords.values();
@@ -95,11 +95,15 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
 
         if(targetRecord!=null){
             if(targetRecord instanceof TeacherRecord){
-                ((TeacherRecord)targetRecord).setValue(fieldName,newValue);
+                synchronized (this){
+                    ((TeacherRecord)targetRecord).setValue(fieldName,newValue);
+                }
                 System.out.println(targetRecord);
             }
             else {
-                ((StudentRecord)targetRecord).setValue(fieldName,newValue);
+                synchronized (this){
+                    ((StudentRecord)targetRecord).setValue(fieldName,newValue);
+                }
                 System.out.println(targetRecord);
             }
         }
@@ -140,8 +144,10 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
             try {
                 FileWriter fileWriter = new FileWriter(loggingFile, true);
                 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-                bufferedWriter.write(log);
-                bufferedWriter.newLine();
+                synchronized (this){
+                    bufferedWriter.write(log);
+                    bufferedWriter.newLine();
+                }
                 bufferedWriter.close();
             }catch (IOException e){
                 e.printStackTrace();
