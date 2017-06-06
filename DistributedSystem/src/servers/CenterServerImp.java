@@ -13,12 +13,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.concurrent.Semaphore;
 
 public class CenterServerImp extends UnicastRemoteObject implements CenterServer {
 
     private HashMap<Character,ArrayList<Record>> storedRecords = new HashMap<>();
     private File loggingFile;
     private String centerName;
+    private Semaphore mutex=new Semaphore(1,true);
    
     
     public CenterServerImp(File loggingFile,String centerName)throws Exception{
@@ -80,7 +82,7 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
     }
 
     @Override
-    public void editRecord(String recordID, String fieldName, String newValue) throws RemoteException {
+    public synchronized void editRecord(String recordID, String fieldName, String newValue) throws RemoteException {
         Record targetRecord=null;
 
         Collection<ArrayList<Record>> arrayListsSet=storedRecords.values();
@@ -95,22 +97,17 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
 
         if(targetRecord!=null){
             if(targetRecord instanceof TeacherRecord){
-                synchronized (this){
-                    ((TeacherRecord)targetRecord).setValue(fieldName,newValue);
-                }
+                ((TeacherRecord)targetRecord).setValue(fieldName,newValue);
                 System.out.println(targetRecord);
             }
             else {
-                synchronized (this){
-                    ((StudentRecord)targetRecord).setValue(fieldName,newValue);
-                }
+                ((StudentRecord)targetRecord).setValue(fieldName,newValue);
                 System.out.println(targetRecord);
             }
         }
         
         String log=(new Date().toString()+" - editing a record ");
         writeLog(log);
-        
     }
 
     private synchronized void storingRecord(Record record){
@@ -144,13 +141,15 @@ public class CenterServerImp extends UnicastRemoteObject implements CenterServer
             try {
                 FileWriter fileWriter = new FileWriter(loggingFile, true);
                 BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-                synchronized (this){
-                    bufferedWriter.write(log);
-                    bufferedWriter.newLine();
-                }
+                mutex.acquire();   //semaphore - lock
+                bufferedWriter.write(log);
+                bufferedWriter.newLine();
+                mutex.release();   //semaphore - unlock
                 bufferedWriter.close();
             }catch (IOException e){
                 e.printStackTrace();
+            }catch (InterruptedException ie){
+                ie.printStackTrace();
             }
         }
 

@@ -97,8 +97,8 @@ public class Manager {
 		try {
 			FileWriter fileWriter = new FileWriter(loggingFile, true);
 			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-			bufferedWriter.newLine();
 			bufferedWriter.write(log);
+			bufferedWriter.newLine();
 			bufferedWriter.close();
 		}catch (IOException e){
 			e.printStackTrace();
