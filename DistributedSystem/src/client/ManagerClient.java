@@ -24,10 +24,23 @@ public class ManagerClient {
 		manager5.createTRecord("li6","F","Du fort","987654321","English","MTL");
 		manager5.getRecordCounts();
 		
-		Manager manager6=new Manager("LVL1111","manager6");
+		Manager manager6=new Manager("LVL2222","manager6");
 		manager6.editRecord("SR10001", "coursesRegistered", "Spanish");
 		
 		manager1.createTRecord("li7","G","Guy","1357924680","Chinese","MTL");
 		manager1.getRecordCounts();
+
+		Manager manager7=new Manager("MTL3333","manager7");
+		manager7.editRecord("SR10001", "coursesRegistered", "english");
+		manager7.createTRecord("lli","xi","mtl","12121","xxx","mtl");
+		manager7.getRecordCounts();
+
+
+		Manager manager8=new Manager("DDO3333","manager8");
+		manager8.editRecord("SR10002", "coursesRegistered", "math");
+		manager8.getRecordCounts();
+		manager8.createSRecord("ti","yi","math","active","2018-01-01");
+		manager8.getRecordCounts();
+
 	}
 }
